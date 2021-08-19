@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from "react";
 import styled from "styled-components";
 import { asideItems } from "../../../assets/data/asideItems";
 import WbSunnyOutlinedIcon from "@material-ui/icons/WbSunnyOutlined";
@@ -28,10 +28,13 @@ const ItemLink = styled(Link)`
   color: #fff;
   text-decoration: none;
   padding-left: 10px;
-  font-size: ${(props) => (props.logo ? "18px" : "16px")};
+  font-size: ${(props: { logo: string }) => (props.logo ? "18px" : "16px")};
 `;
 
-const SidebarLinks = styled(ItemLink)`
+const SidebarLinks = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  padding-left: 10px;
   :hover {
     color: lightblue;
   }
@@ -52,7 +55,11 @@ const LogoutWrapper = styled.div`
   }
 `;
 
-const Sidebar = () => {
+const Sidebar: FC = () => {
+  const logoutUser = (): void => {
+    localStorage.setItem("token", "");
+  };
+
   return (
     <>
       <SidebarWrapper>
@@ -65,11 +72,12 @@ const Sidebar = () => {
         <ItemsWrapper>
           <ul>
             {asideItems.map((item) => {
+              const { icon, name } = item;
               return (
-                <ListItem key={item.name}>
-                  <img src={item.icon} alt={item.name} />
-                  <SidebarLinks to={`/${item.name.toLowerCase()}`}>
-                    {item.name}
+                <ListItem key={name}>
+                  <img src={icon} alt={name} />
+                  <SidebarLinks to={`/${name.toLowerCase()}`}>
+                    {name}
                   </SidebarLinks>
                 </ListItem>
               );
@@ -77,7 +85,9 @@ const Sidebar = () => {
           </ul>
           <LogoutWrapper>
             <img src={logout} alt="Logout" />
-            <SidebarLinks to="/login">Logout</SidebarLinks>
+            <SidebarLinks to="/login" onClick={logoutUser}>
+              Logout
+            </SidebarLinks>
           </LogoutWrapper>
         </ItemsWrapper>
       </SidebarWrapper>

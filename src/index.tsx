@@ -1,18 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import {BrowserRouter} from "react-router-dom";
-import {createGlobalStyle} from 'styled-components'
+import { BrowserRouter } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import ErrorBoundary from "./services/ErrorBoundary";
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: Roboto, sans-serif;
   }
-`
+`;
 
 ReactDOM.render(
-    <BrowserRouter>
-        <GlobalStyle/>
-        <App/>
-    </BrowserRouter>,
-    document.getElementById("root"));
+  <BrowserRouter>
+    <ErrorBoundary>
+      <GlobalStyle />
+      <App />
+    </ErrorBoundary>
+  </BrowserRouter>,
+  document.getElementById("root")
+);

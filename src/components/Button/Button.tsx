@@ -1,5 +1,6 @@
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
+import { FC, MouseEventHandler, ReactNode } from "react";
 
 const StyledButton = styled(Button)`
   background: aquamarine !important;
@@ -7,7 +8,12 @@ const StyledButton = styled(Button)`
   height: 35px;
 `;
 
-const SearchButton = ({ onClick, children }) => (
+interface Props {
+  onClick: MouseEventHandler;
+  children: string | ReactNode;
+}
+
+const SearchButton: FC<Props> = ({ onClick, children }) => (
   <StyledButton onClick={onClick}>{children}</StyledButton>
 );
 

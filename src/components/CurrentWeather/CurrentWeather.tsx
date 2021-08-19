@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState, FC, ReactElement } from "react";
+import React, { useCallback, useEffect, useState, FC } from "react";
 import { useRouteMatch } from "react-router-dom";
 import debounce from "lodash.debounce";
 import CurrentWeatherTable from "./CurrentWeatherTable/CurrentWeatherTable";
+// @ts-ignore
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import SearchHeader from "../SearchHeader/SearchHeader";
@@ -13,30 +14,31 @@ import {
   ItemsWrapper,
 } from "../../assets/styles/styles";
 import CallService from "../../services/API";
+import { AxiosResponse } from "axios";
 
-const CurrentWeather = () => {
-  const [city, setCity] = useState(null);
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
+const CurrentWeather: FC = () => {
+  const [city, setCity] = useState<null>(null);
+  const [search, setSearch] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { path } = useRouteMatch();
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCity(null);
-    setSearch(e.target.value);
+    setSearch((e.target as HTMLInputElement).value);
   };
 
   const handleSubmitSearch = async () => {
-    const queryKeys = {
+    const queryKeys: object = {
       key: `${process.env.REACT_APP_USER_TOKEN}`,
       q: search,
     };
 
     setLoading(true);
-    const city = await CallService.WeatherAPI(
+    const city: AxiosResponse = await CallService.WeatherAPI(
       "/forecast.json",
-      queryKeys,
-      "get"
+      "get",
+      queryKeys
     );
     if (city) {
       setLoading(false);
@@ -44,7 +46,7 @@ const CurrentWeather = () => {
     }
   };
 
-  const clearSearch = () => {
+  const clearSearch = (): void => {
     setSearch("");
     setCity(null);
   };
@@ -67,6 +69,7 @@ const CurrentWeather = () => {
       <Header>
         {path === "/weather" ? "Current Weather" : "Daily Weather"}
       </Header>
+
       <HeaderWrapper>
         <SearchHeader
           onChange={handleSearch}
@@ -75,6 +78,7 @@ const CurrentWeather = () => {
           value={search}
         />
       </HeaderWrapper>
+
       <ContentWrapper>
         {path === "/weather" ? (
           <CurrentWeatherTable city={city} loading={loading} />
