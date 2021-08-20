@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-//
+
 const Form = styled.form`
   width: 400px;
   height: 350px;
@@ -98,7 +98,14 @@ const FormCreator: FC<FormProps> = ({ form }) => {
       </FormWrapper>
 
       {button && (
-        <FormButton variant={button.variant} >{button.text}</FormButton>
+        // @ts-ignore
+        <FormButton
+          variant={button.variant}
+          color={button.color}
+          type={button.type}
+        >
+          {button.text}
+        </FormButton>
       )}
       {link && <RegisterLink to={link.path}>{link.text}</RegisterLink>}
     </Form>
