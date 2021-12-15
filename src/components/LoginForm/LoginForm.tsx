@@ -47,26 +47,6 @@ const RegisterLink = styled(Link)`
   }
 `;
 
-// const loginFormData = {
-//     options: {
-//         onSubmit: (formValue) => (),
-//         onCancel: () => (),
-//     },
-//     rows: [[{
-//         type: 'input',
-//         value: '',
-//         restOptions: (formValue) => {
-//             if(formValue.name) {
-//                 return {disabled:true}
-//             }
-//         }
-//     },
-//         {
-//             type: 'select',
-//             options: ''
-//         }], []],
-// }
-
 type FormValues = {
   user: {
     name: string;
